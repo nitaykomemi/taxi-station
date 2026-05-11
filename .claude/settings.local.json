@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(gh auth status 2>&1)",
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue; if \\(-not $?\\) { Get-ChildItem \"C:\\\\Program Files\\\\GitHub CLI\\\\\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\\\\GitHub CLI\\\\\" -ErrorAction SilentlyContinue })",
+      "PowerShell($env:PATH += \";C:\\\\Program Files\\\\GitHub CLI\"; gh auth status 2>&1)"
+    ]
+  }
+}
