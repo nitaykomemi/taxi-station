@@ -130,7 +130,9 @@ void processPayment(TaxiStation* mystation, int line_index, int h) {
 	printf("The price per ticket is %.2f NIS. Please enter the amount to pay: ", ticket_price);
 	scanf("%lf", &payment);
 
-	if (payment == ticket_price) {
+	if (payment >= ticket_price) {
+		double change = payment - ticket_price;
+
 		printf("\nPayment Confirmed! Printing your ticket...\n\n");
 
 		printf("***********************************\n");
@@ -139,6 +141,8 @@ void processPayment(TaxiStation* mystation, int line_index, int h) {
 		printf("* Line Number:    %-15d *\n", mystation->lines[line_index].line_number);
 		printf("* Departure Time: %02d:%02d           *\n", GET_HOUR(departure_mins), GET_MIN(departure_mins));
 		printf("* Paid Amount:    %-10.2f NIS  *\n", payment);
+		if (change > 0.0)
+			printf("* Change:         %-10.2f NIS  *\n", change);
 		printf("***********************************\n");
 		printf("* Have a safe trip!         *\n");
 		printf("***********************************\n\n");
@@ -146,7 +150,9 @@ void processPayment(TaxiStation* mystation, int line_index, int h) {
 		updateStationData(mystation, line_index, h, ticket_price);
 	}
 	else {
-		printf("\nError: Inaccurate payment. Transaction cancelled.\n");
+		printf("\nError: Insufficient payment. %.2f NIS required, you paid %.2f NIS.\n",
+			ticket_price, payment);
+		printf("Transaction cancelled. Please try again.\n");
 	}
 }
 
